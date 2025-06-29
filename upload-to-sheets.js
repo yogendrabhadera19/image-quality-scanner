@@ -34,9 +34,9 @@ async function ensureSheetTabExists(sheets, sheetName) {
                 ],
             },
         });
-        console.log(`🆕 Created new sheet tab: ${sheetName}`);
+        console.log(`Created new sheet tab: ${sheetName}`);
     } else {
-        console.log(`✅ Sheet tab already exists: ${sheetName}`);
+        console.log(`Sheet tab already exists: ${sheetName}`);
     }
 }
 
@@ -85,7 +85,7 @@ async function main() {
         },
     });
 
-    console.log(`✅ CSV data uploaded to tab "${sheetDateName}" starting at row ${rowStart}`);
+    console.log(`CSV data uploaded to tab "${sheetDateName}" starting at row ${rowStart}`);
 }
 
 main().catch(console.error);
