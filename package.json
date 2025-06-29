@@ -1,0 +1,23 @@
+{
+  "name": "image-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "fast-csv": "^5.0.2",
+    "fast-xml-parser": "^5.2.5",
+    "googleapis": "^150.0.1",
+    "node-fetch": "^3.3.2",
+    "node-html-parser": "^7.0.1",
+    "puppeteer": "^24.11.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sharp": "^0.34.2"
+  }
+}
