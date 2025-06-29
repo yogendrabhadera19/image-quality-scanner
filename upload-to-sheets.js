@@ -1,15 +1,17 @@
 import fs from 'fs';
 import { google } from 'googleapis';
 import { parse } from 'fast-csv';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const auth = new google.auth.GoogleAuth({
-    keyFile: 'credentials.json',
+    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-const spreadsheetId = '1ibt74xunvcnPytVTGf8mUGsTTbXlCBQFwwkM8zCLy-8'; // replace with actual ID
+const spreadsheetId = process.env.SHEET_ID;
 const sheetDateName = new Date().toISOString().split('T')[0]; // e.g., 2025-06-28
-const csvPath = './image-check-report.csv';
+const csvPath = process.env.CSV_NAME_AND_PATH;
 
 async function ensureSheetTabExists(sheets, sheetName) {
     const sheetMeta = await sheets.spreadsheets.get({ spreadsheetId });

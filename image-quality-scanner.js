@@ -1,14 +1,14 @@
 import { readFile } from 'fs/promises';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-
 puppeteer.use(StealthPlugin());
-// import puppeteer from 'puppeteer';
 import sharp from 'sharp';
 import { writeToPath } from 'fast-csv';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const urlsToCheck = JSON.parse(await readFile(new URL('./urls.json', import.meta.url), 'utf-8'));
-console.log(`✅ Loaded ${urlsToCheck.length} URLs`);
+console.log(`Loaded ${urlsToCheck.length} URLs`);
 
 const results = [];
 let imageGlobalIndex = 1;
@@ -36,7 +36,7 @@ async function safeGoto(page, url, retries = 2) {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 });
       return;
     } catch (err) {
-      console.warn(`⚠️ Retry ${i + 1}/${retries} failed for ${url}: ${err.message}`);
+      console.warn(`Retry ${i + 1}/${retries} failed for ${url}: ${err.message}`);
       if (i === retries - 1) throw err;
       await delay(3000);
     }
@@ -95,7 +95,7 @@ async function autoScrollAndTouch(page, deviceLabel) {
 
     await delay(2000);
   } catch (err) {
-    console.warn('⚠️ Scroll/Touch interaction failed:', err.message);
+    console.warn(' Scroll/Touch interaction failed:', err.message);
   }
 }
 
@@ -151,7 +151,7 @@ async function processImages(page, pageUrl, deviceLabel) {
             : 'No',
       });
     } catch (err) {
-      console.warn(`⚠️ Failed to process ${img.src}: ${err.message}`);
+      console.warn(` Failed to process ${img.src}: ${err.message}`);
     }
   }
 }
@@ -164,14 +164,14 @@ async function processURL(browser, pageUrl) {
     const page = await browser.newPage();
     await page.setViewport(device.viewport);
     try {
-      console.log(`🔍 Checking ${device.name} → ${pageUrl}`);
+      console.log(`Checking ${device.name} → ${pageUrl}`);
       await safeGoto(page, pageUrl);
       await delay(2000);
       await autoScrollAndTouch(page, device.name);
       await delay(2000);
       await processImages(page, pageUrl, device.name);
     } catch (err) {
-      console.error(`❌ Error on ${device.name} ${pageUrl}: ${err.message}`);
+      console.error(`Error on ${device.name} ${pageUrl}: ${err.message}`);
     } finally {
       await page.close();
     }
@@ -195,12 +195,12 @@ const chunked = (arr, size) =>
 
   await browser.close();
 
-  const outputPath = './image-check-report.csv';
+  const outputPath = process.env.CSV_NAME_AND_PATH;
   if (results.length === 0) {
-    console.log('⚠️ No reportable issues found.');
+    console.log('No reportable issues found.');
   } else {
     writeToPath(outputPath, results, { headers: true }).on('finish', () => {
-      console.log(`✅ Report written to ${outputPath}`);
+      console.log(`Report written to ${outputPath}`);
     });
   }
 })();

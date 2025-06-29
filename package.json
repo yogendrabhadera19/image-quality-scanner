@@ -1,21 +1,23 @@
 {
-  "name": "image-checker",
+  "name": "image-quality-scanner",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Script to analyze image rendering quality across devices",
+  "main": "image-quality-scanner.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node image-quality-scanner.js"
   },
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
+    "dotenv": "^17.0.0",
     "fast-csv": "^5.0.2",
-    "fast-xml-parser": "^5.2.5",
     "googleapis": "^150.0.1",
     "node-fetch": "^3.3.2",
     "node-html-parser": "^7.0.1",
-    "puppeteer": "^24.11.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "sharp": "^0.34.2"
